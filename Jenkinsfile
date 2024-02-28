@@ -1,6 +1,6 @@
 // https://github.com/camunda/jenkins-global-shared-library
 // https://github.com/camunda/cambpm-jenkins-shared-library
-@Library(['camunda-ci', 'cambpm-jenkins-shared-library']) _
+@Library(['camunda-ci', 'cambpm-jenkins-shared-library@52-declarative-pod-specs']) _
 
 def failedStageTypes = []
 
@@ -14,6 +14,7 @@ pipeline {
     LOGGER_LOG_LEVEL = 'DEBUG'
     MAVEN_VERSION = 'maven-3.8-latest'
     DEF_JDK_VERSION = 'jdk-11-latest'
+    NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -36,13 +37,27 @@ pipeline {
       }
       steps {
         cambpmConditionalRetry([
-          agentLabel: 'h2_perf32',
+          podSpec: [
+            cpu: 32,
+            yaml:"""
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    agent: ap7-ci-build-experiment
+spec:
+  tolerations:
+    - key: "agents-n1-standard-32-netssd-preempt"
+      operator: "Exists"
+      effect: "NoSchedule"
+"""],
           suppressErrors: false,
           runSteps: {
             skipTests = ""
             if (env.CHANGE_ID != null && pullRequest.labels.contains('ci:skipTests')) {
                skipTests = "-DskipTests "
             }
+            sh(label: 'GIT: Mark current directory as safe', script: "git config --global --add safe.directory \$PWD")
             withVault([vaultSecrets: [
                 [
                     path        : 'secret/products/cambpm/ci/xlts.dev',
