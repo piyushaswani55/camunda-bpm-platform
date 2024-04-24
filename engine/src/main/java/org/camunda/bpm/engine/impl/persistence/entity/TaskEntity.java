@@ -158,6 +158,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected boolean isFormKeyInitialized = false;
   protected String formKey;
   protected CamundaFormRef camundaFormRef;
+  protected boolean attachmentExists;
+  protected boolean commentExists;
 
   @SuppressWarnings({ "unchecked" })
   protected transient VariableStore<VariableInstanceEntity> variableStore
@@ -1451,6 +1453,10 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       }
     }
   }
+  public void initializeAttachmentAndComments(){
+    this.attachmentExists = !getProcessEngine().getTaskService().getTaskAttachments(id).isEmpty();
+    this.commentExists = !getProcessEngine().getTaskService().getTaskComments(id).isEmpty();
+  }
 
   @Override
   public String getFormKey() {
@@ -1758,7 +1764,14 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       throw ProcessEngineLogger.CMD_LOGGER.exceptionBpmnErrorPropagationFailed(errorCode, ex);
     }
   }
-
+  @Override
+  public boolean getAttachments() {
+    return attachmentExists;
+  }
+  @Override
+  public boolean getComments() {
+    return commentExists;
+  }
   public void escalation(String escalationCode, Map<String, Object> variables) {
     ensureTaskActive();
     ActivityExecution activityExecution = getExecution();
