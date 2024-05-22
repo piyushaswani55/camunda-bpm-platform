@@ -49,7 +49,8 @@ public class TaskDto {
   private String formKey;
   private CamundaFormRef camundaFormRef;
   private String tenantId;
-
+  private boolean attachments;
+  private boolean comments;
   public String getId() {
     return id;
   }
@@ -194,6 +195,21 @@ public class TaskDto {
     this.tenantId = tenantId;
   }
 
+  public boolean getAttachments() {
+    return attachments;
+  }
+  public void setAttachments(boolean attachments) {
+    this.attachments = attachments;
+  }
+
+  public boolean isComments() {
+    return comments;
+  }
+
+  public void setComments(boolean comments) {
+    this.comments = comments;
+  }
+
   public static TaskDto fromEntity(Task task) {
     TaskDto dto = new TaskDto();
     dto.id = task.getId();
@@ -221,6 +237,8 @@ public class TaskDto {
     dto.caseInstanceId = task.getCaseInstanceId();
     dto.suspended = task.isSuspended();
     dto.tenantId = task.getTenantId();
+    dto.attachments = task.getAttachments();
+    dto.comments = task.getComments();
 
     try {
       dto.formKey = task.getFormKey();
