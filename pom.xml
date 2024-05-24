@@ -65,7 +65,7 @@
 
         <module>quarkus-extension</module>
 
-<!--        c-->
+        <module>qa</module>
 
         <module>javaee/ejb-service</module>
         <module>javaee/ejb-client</module>
