@@ -187,8 +187,8 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     boolean returnedSuspensionState = from(content).getBoolean("[0].suspended");
     String returnedFormKey = from(content).getString("[0].formKey");
     String returnedTenantId = from(content).getString("[0].tenantId");
-    boolean returnedAttachmentsInfo = from(content).getBoolean("[0].attachments");
-    boolean returnedCommentsInfo = from(content).getBoolean("[0].comments");
+    boolean returnedAttachmentsInfo = from(content).getBoolean("[0].attachment");
+    boolean returnedCommentsInfo = from(content).getBoolean("[0].comment");
 
     assertThat(MockProvider.EXAMPLE_TASK_NAME).isEqualTo(returnedTaskName);
     assertThat(MockProvider.EXAMPLE_TASK_ID).isEqualTo(returnedId);

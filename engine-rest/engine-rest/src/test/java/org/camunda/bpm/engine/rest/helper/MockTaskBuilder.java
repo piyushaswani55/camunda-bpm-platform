@@ -50,8 +50,9 @@ public class MockTaskBuilder {
   private String formKey;
   private CamundaFormRef camundaFormRef;
   private String tenantId;
-  private boolean attachments;
-  private boolean comments;
+  private boolean hasAttachment;
+
+  private boolean hasComment;
 
 
 
@@ -167,13 +168,13 @@ public class MockTaskBuilder {
     return this;
   }
 
-  public MockTaskBuilder attachments(boolean hasAttachments) {
-    this.attachments = hasAttachments;
+  public MockTaskBuilder hasAttachment(boolean hasAttachment) {
+    this.hasAttachment = hasAttachment;
     return this;
   }
 
-  public MockTaskBuilder comments(boolean hasComments) {
-    this.comments = hasComments;
+  public MockTaskBuilder hasComment(boolean hasComment) {
+    this.hasComment = hasComment;
     return this;
   }
 
@@ -201,8 +202,8 @@ public class MockTaskBuilder {
     when(mockTask.getFormKey()).thenReturn(formKey);
     when(mockTask.getCamundaFormRef()).thenReturn(camundaFormRef);
     when(mockTask.getTenantId()).thenReturn(tenantId);
-    when(mockTask.getAttachments()).thenReturn(attachments);
-    when(mockTask.getComments()).thenReturn(comments);
+    when(mockTask.hasAttachment()).thenReturn(hasAttachment);
+    when(mockTask.hasComment()).thenReturn(hasComment);
     return mockTask;
   }
 

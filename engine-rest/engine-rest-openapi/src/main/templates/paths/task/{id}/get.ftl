@@ -54,8 +54,8 @@
                            "version": 2
                          },
                          "tenantId":"aTenantId",
-                         "attachments":false,
-                         "comments":false
+                         "attachment":false,
+                         "comment":false
                        }
                      }'] />
 

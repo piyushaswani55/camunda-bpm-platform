@@ -18,6 +18,7 @@ package org.camunda.bpm.engine.rest.dto.task;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.camunda.bpm.engine.BadUserRequestException;
 import org.camunda.bpm.engine.form.CamundaFormRef;
 import org.camunda.bpm.engine.rest.dto.converter.DelegationStateConverter;
@@ -49,8 +50,9 @@ public class TaskDto {
   private String formKey;
   private CamundaFormRef camundaFormRef;
   private String tenantId;
-  private boolean attachments;
-  private boolean comments;
+  @JsonProperty("attachment")
+  private boolean hasAttachment;
+  private boolean hasComment;
   public String getId() {
     return id;
   }
@@ -196,20 +198,19 @@ public class TaskDto {
   }
 
   public boolean getAttachments() {
-    return attachments;
+    return hasAttachment;
   }
-  public void setAttachments(boolean attachments) {
-    this.attachments = attachments;
-  }
-
-  public boolean isComments() {
-    return comments;
+  public void setAttachments(boolean hasAttachment) {
+    this.hasAttachment = hasAttachment;
   }
 
-  public void setComments(boolean comments) {
-    this.comments = comments;
+  public boolean getComment() {
+    return hasComment;
   }
 
+  public void setComments(boolean hasComment) {
+    this.hasComment = hasComment;
+  }
   public static TaskDto fromEntity(Task task) {
     TaskDto dto = new TaskDto();
     dto.id = task.getId();
@@ -237,8 +238,8 @@ public class TaskDto {
     dto.caseInstanceId = task.getCaseInstanceId();
     dto.suspended = task.isSuspended();
     dto.tenantId = task.getTenantId();
-    dto.attachments = task.getAttachments();
-    dto.comments = task.getComments();
+    dto.hasAttachment = task.hasAttachment();
+    dto.hasComment = task.hasComment();
 
     try {
       dto.formKey = task.getFormKey();
