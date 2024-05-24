@@ -1060,8 +1060,8 @@ public abstract class MockProvider {
       .formKey(EXAMPLE_FORM_KEY)
       .camundaFormRef(EXAMPLE_FORM_KEY, EXAMPLE_FORM_REF_BINDING, EXAMPLE_FORM_REF_VERSION)
       .tenantId(EXAMPLE_TENANT_ID)
-      .attachments(EXAMPLE_TASK_ATTACHMENT_STATE)
-      .comments(EXAMPLE_TASK_COMMENT_STATE);
+      .hasAttachment(EXAMPLE_TASK_ATTACHMENT_STATE)
+      .hasComment(EXAMPLE_TASK_COMMENT_STATE);
   }
 
   public static List<Task> createMockTasks() {

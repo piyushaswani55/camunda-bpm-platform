@@ -1765,11 +1765,11 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
   }
   @Override
-  public boolean getAttachments() {
+  public boolean hasAttachment() {
     return attachmentExists;
   }
   @Override
-  public boolean getComments() {
+  public boolean hasComment() {
     return commentExists;
   }
   public void escalation(String escalationCode, Map<String, Object> variables) {

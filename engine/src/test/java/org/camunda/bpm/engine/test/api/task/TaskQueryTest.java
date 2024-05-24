@@ -32,11 +32,8 @@ import static org.camunda.bpm.engine.test.api.runtime.TestOrderingUtil.taskByNam
 import static org.camunda.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPriority;
 import static org.camunda.bpm.engine.test.api.runtime.TestOrderingUtil.taskByProcessInstanceId;
 import static org.camunda.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -5602,7 +5599,37 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskResult.getLastUpdated()).isAfter(beforeSave);
     assertThat(taskResult.getLastUpdated()).isAfter(taskResult.getCreateTime());
   }
-
+  @Test
+  @Deployment(resources = "org/camunda/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+  public void shouldNotFindAttachmentAndCommentInfoWithoutQueryParam() {
+    // given
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+    task.setAssignee("myself");
+    // when
+    taskService.createComment(task.getId(),processInstance.getId(),"testComment");
+    taskService.createAttachment("foo",task.getId(),processInstance.getId(),"testAttachment","testDesc","http://camunda.org");
+    // then
+    Task taskResult = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+    assertThat(taskResult).isNotNull();
+    assertFalse(taskResult.hasComment());
+    assertFalse(taskResult.hasAttachment());
+  }
+  @Test
+  @Deployment(resources = "org/camunda/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+  public void shouldFindAttachmentAndCommentInfoWithQueryParam() {
+    // given
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+    // when
+    taskService.createComment(task.getId(),processInstance.getId(),"testComment");
+    taskService.createAttachment("foo",task.getId(),processInstance.getId(),"testAttachment","testDesc","http://camunda.org");
+    // then
+    Task taskResult = taskService.createTaskQuery().processInstanceId(processInstance.getId()).withCommentAttachmentInfo().singleResult();
+    assertThat(taskResult).isNotNull();
+    assertTrue(taskResult.hasComment());
+    assertTrue(taskResult.hasAttachment());
+  }
   // ---------------------- HELPER ------------------------------
 
   // make sure that time passes between two fast operations
