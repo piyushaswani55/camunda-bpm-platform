@@ -151,8 +151,8 @@
                            "suspended": false,
                            "formKey": "embedded:app:develop/invoice-forms/approve-invoice.html",
                            "tenantId": null,
-                           "attachments":false,
-                           "comments":false
+                           "attachment":false,
+                           "comment":false
                          }
                        ]
                      }'
