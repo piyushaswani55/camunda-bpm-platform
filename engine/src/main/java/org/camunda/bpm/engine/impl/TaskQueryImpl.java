@@ -1449,7 +1449,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       }
     }
 
-    if (withCommentAttachmentInfo && Context.getProcessEngineConfiguration().getHistoryLevel()!= HistoryLevel.HISTORY_LEVEL_NONE) {
+    if (withCommentAttachmentInfo && !Context.getProcessEngineConfiguration().getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_NONE)) {
       for (Task task : taskList) {
         // verify attachment and comments exists for the task
         ((TaskEntity) task).initializeAttachmentAndComments();

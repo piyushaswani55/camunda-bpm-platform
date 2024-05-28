@@ -1454,8 +1454,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
   }
   public void initializeAttachmentAndComments(){
-    this.attachmentExists = !getProcessEngine().getTaskService().getTaskAttachments(id).isEmpty();
-    this.commentExists = !getProcessEngine().getTaskService().getTaskComments(id).isEmpty();
+    this.attachmentExists = !Context.getCommandContext().getAttachmentManager().findAttachmentsByTaskId(id).isEmpty();
+    this.commentExists = !Context.getCommandContext().getCommentManager().findCommentsByTaskId(id).isEmpty();
   }
 
   @Override
