@@ -38,19 +38,7 @@ pipeline {
       steps {
         cambpmConditionalRetry([
           podSpec: [
-            cpu: 32,
-            yaml:"""
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    agent: ap7-ci-build-experiment
-spec:
-  tolerations:
-    - key: "agents-n1-standard-32-netssd-preempt"
-      operator: "Exists"
-      effect: "NoSchedule"
-"""],
+            cpu: 32
           suppressErrors: false,
           runSteps: {
             //sh(label: 'GIT: Mark current directory as safe', script: "git config --global --add safe.directory \$PWD")
@@ -66,7 +54,7 @@ spec:
                         [envVar: 'XLTS_AUTH_TOKEN', vaultKey: 'authToken']]
                 ]]]) {
               cambpmRunMaven('.',
-                  'clean source:jar deploy source:test-jar com.mycila:license-maven-plugin:check -Pdistro,distro-ce,distro-wildfly,distro-webjar,h2-in-memory -DaltStagingDirectory=${WORKSPACE}/staging -DskipRemoteStaging=true -fn'+ skipTests,
+                  'clean source:jar deploy source:test-jar com.mycila:license-maven-plugin:check -Pdistro,distro-ce,distro-wildfly,distro-webjar,h2-in-memory,skipFrontendBuild -DaltStagingDirectory=${WORKSPACE}/staging -DskipRemoteStaging=true -fn'+ skipTests,
                   withCatch: false,
                   withNpm: true,
                   // we use JDK 17 to build the artifacts, as it is required for supporting Spring Boot 3
