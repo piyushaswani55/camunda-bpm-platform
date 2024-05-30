@@ -39,6 +39,7 @@ pipeline {
         cambpmConditionalRetry([
           podSpec: [
             cpu: 32
+            ],
           suppressErrors: false,
           runSteps: {
             //sh(label: 'GIT: Mark current directory as safe', script: "git config --global --add safe.directory \$PWD")
