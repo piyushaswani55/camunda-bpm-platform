@@ -14,7 +14,7 @@ pipeline {
     LOGGER_LOG_LEVEL = 'DEBUG'
     MAVEN_VERSION = 'maven-3.8-latest'
     DEF_JDK_VERSION = 'jdk-11-latest'
-    NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+    //NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
