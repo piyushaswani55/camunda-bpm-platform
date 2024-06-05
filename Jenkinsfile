@@ -54,7 +54,7 @@ pipeline {
             """],
           suppressErrors: false,
           runSteps: {
-            //sh(label: 'GIT: Mark current directory as safe', script: "git config --global --add safe.directory \$PWD")
+            sh(label: 'GIT: Mark current directory as safe', script: "git config --global --add safe.directory \$PWD")
             skipTests = ""
             if (env.CHANGE_ID != null && pullRequest.labels.contains('ci:skipTests')) {
                skipTests = "-DskipTests "
