@@ -39,7 +39,7 @@ pipeline {
         cambpmConditionalRetry([
           podSpec: [
             cpu: 32,
-            image: 'maven:3.8.5-openjdk-17',
+            image: 'maven:3.8.5-eclipse-temurin-17',
             yaml:"""
             apiVersion: v1
             kind: Pod
