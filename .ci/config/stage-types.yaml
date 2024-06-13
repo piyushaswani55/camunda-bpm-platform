@@ -180,7 +180,6 @@ platform-jdk-jdk-21-latest:
   command: 'install source:jar source:test-jar -Pdistro,distro-ce,distro-wildfly'
   stash:
     runtimeStash: true
-  nodeLabel: 'h2'
   podSpec:
     cpu: 32
     image: 'maven:3.8.5-eclipse-temurin-17'
