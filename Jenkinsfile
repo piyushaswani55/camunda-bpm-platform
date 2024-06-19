@@ -39,19 +39,7 @@ pipeline {
         cambpmConditionalRetry([
           podSpec: [
             cpu: 32,
-            image: 'maven:3.8.5-eclipse-temurin-17',
-            yaml:"""
-            apiVersion: v1
-            kind: Pod
-            metadata:
-              labels:
-                agent: ap7-ci-build-experiment
-            spec:
-              tolerations:
-                - key: "agents-n1-standard-32-netssd-preempt"
-                  operator: "Exists"
-                  effect: "NoSchedule"
-            """],
+            image: 'maven:3.8.5-eclipse-temurin-17'],
           suppressErrors: false,
           runSteps: {
             sh(label: 'GIT: Mark current directory as safe', script: "git config --global --add safe.directory \$PWD")
