@@ -130,7 +130,7 @@ engine-rest-jakarta-unit-compatibility-wildfly:
     - 'rest-api'
   nodeLabel: 'h2'
   jdkVersion: 'openjdk-jdk-17-latest'
-platform-jdk-jdk-17-latest:
+platform-jdk-temurin-jdk-17-latest:
   directory: '.'
   command: 'install source:jar source:test-jar -Pdistro,distro-ce,distro-wildfly'
   stash:
@@ -139,7 +139,7 @@ platform-jdk-jdk-17-latest:
   podSpec:
     cpu: 32
     image: 'maven:3.8.5-eclipse-temurin-17'
-platform-jdk-jdk-21-latest:
+platform-jdk-temurin-jdk-21-latest:
   directory: '.'
   command: 'install source:jar source:test-jar -Pdistro,distro-ce,distro-wildfly'
   stash:
@@ -148,7 +148,7 @@ platform-jdk-jdk-21-latest:
   podSpec:
     cpu: 32
     image: 'maven:3.9.7-eclipse-temurin-21'
-platform-jdk-jdk-11-latest:
+platform-jdk-temurin-jdk-11-latest:
   directory: '.'
   command: 'install source:jar source:test-jar
     -pl ''!spring-boot-starter,!spring-boot-starter/starter,!spring-boot-starter/starter-client/spring,!spring-boot-starter/starter-client/spring-boot,
