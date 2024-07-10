@@ -2929,8 +2929,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       initTelemetryData();
     }
     if (telemetryReporter == null) {
-      telemetryReporter = new TelemetryReporter(commandExecutorTxRequired,
-                                                telemetryData,
+      telemetryReporter = new TelemetryReporter(telemetryData,
                                                 telemetryRegistry,
                                                 metricsRegistry);
     }
