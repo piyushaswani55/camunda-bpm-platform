@@ -355,7 +355,6 @@ import org.camunda.bpm.engine.impl.telemetry.dto.JdkImpl;
 import org.camunda.bpm.engine.impl.telemetry.dto.ProductImpl;
 import org.camunda.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.camunda.bpm.engine.impl.telemetry.reporter.DiagnosticsCollector;
-import org.camunda.bpm.engine.impl.telemetry.reporter.TelemetryReporter;
 import org.camunda.bpm.engine.impl.util.ClockUtil;
 import org.camunda.bpm.engine.impl.util.IoUtil;
 import org.camunda.bpm.engine.impl.util.ParseUtil;
@@ -1040,11 +1039,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // diagnostics ///////////////////////////////////////////////////////
   protected DiagnosticsCollector diagnosticsCollector;
-  protected TelemetryReporter telemetryReporter;
-  /** Determines if the telemetry reporter thread runs. For telemetry to be sent,
-   * this flag must be set to <code>true</code> and telemetry must be enabled via API
-   * (see {@link ManagementService#toggleTelemetry(boolean)}. */
-  protected boolean isTelemetryReporterActivate = true;
   protected TelemetryDataImpl telemetryData;
 
   // Exception Codes ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2930,13 +2924,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (telemetryData == null) {
       initTelemetryData();
     }
-    if (diagnosticsCollector != null) {
+    if (diagnosticsCollector == null) {
       diagnosticsCollector = new DiagnosticsCollector(telemetryData, telemetryRegistry, metricsRegistry);
-    }
-    if (telemetryReporter == null) {
-      telemetryReporter = new TelemetryReporter(telemetryData,
-                                                telemetryRegistry,
-                                                metricsRegistry);
     }
   }
 
@@ -5304,24 +5293,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
   public void setDiagnosticsCollector(DiagnosticsCollector diagnosticsCollector) {
     this.diagnosticsCollector = diagnosticsCollector;
-  }
-
-  public TelemetryReporter getTelemetryReporter() {
-    return telemetryReporter;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryReporter(TelemetryReporter telemetryReporter) {
-    this.telemetryReporter = telemetryReporter;
-    return this;
-  }
-
-  public boolean isTelemetryReporterActivate() {
-    return isTelemetryReporterActivate;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryReporterActivate(boolean isTelemetryReporterActivate) {
-    this.isTelemetryReporterActivate = isTelemetryReporterActivate;
-    return this;
   }
 
   public TelemetryDataImpl getTelemetryData() {
