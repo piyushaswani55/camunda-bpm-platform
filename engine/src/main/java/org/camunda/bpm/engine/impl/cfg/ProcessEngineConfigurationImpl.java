@@ -1040,6 +1040,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // diagnostics ///////////////////////////////////////////////////////
   protected DiagnosticsCollector diagnosticsCollector;
   protected TelemetryDataImpl telemetryData;
+  protected DiagnosticsRegistry diagnosticsRegistry;
 
   // Exception Codes ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -5343,4 +5344,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return new ExceptionCodeInterceptor(builtinExceptionCodeProvider, customExceptionCodeProvider);
   }
 
+  public DiagnosticsRegistry getDiagnosticsRegistry() {
+    return diagnosticsRegistry;
+  }
+
+  public ProcessEngineConfiguration setDiagnosticsRegistry(DiagnosticsRegistry diagnosticsRegistry) {
+    this.diagnosticsRegistry = diagnosticsRegistry;
+    return this;
+  }
 }
